@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
 	MDBTable,
@@ -18,8 +18,15 @@ import "./App.css";
 
 const App = () => {
 	const [file, setFile] = useState<File | null>(null);
-	const [transactions, setTransactions] = useState<any[]>([]);
+	const [transactions, setTransactions] = useState<any[]>(() => {
+		const savedTransactions = localStorage.getItem("transactions");
+		return savedTransactions ? JSON.parse(savedTransactions) : [];
+	});
 	const [searchQuery, setSearchQuery] = useState<string>("");
+
+	useEffect(() => {
+		localStorage.setItem("transactions", JSON.stringify(transactions));
+	}, [transactions]);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (event.target.files) {
@@ -48,6 +55,11 @@ const App = () => {
 		setSearchQuery(event.target.value);
 	};
 
+	const handleClear = () => {
+		setTransactions([]);
+		localStorage.removeItem("transactions");
+	};
+
 	const filteredTransactions = transactions.filter(transaction =>
 		transaction.Description.toLowerCase().includes(searchQuery.toLowerCase())
 	);
@@ -64,9 +76,10 @@ const App = () => {
 									type="file"
 									accept="application/pdf"
 									onChange={handleFileChange}
-									className="file-input"
+									className="file-input text-center m-auto my-3"
 								/>
-								<MDBBtn onClick={handleUpload} className="upload-button ms-2">Upload</MDBBtn>
+								<MDBBtn onClick={handleUpload} className="upload-button ms-2">View Data</MDBBtn>
+								<MDBBtn onClick={handleClear} className="clear-button ms-2 bg-danger">Clear Data</MDBBtn>
 							</MDBCardText>
 							<MDBInput
 								label="Search Transactions"
