@@ -1,0 +1,42 @@
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.file-input {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.upload-button {
+	background-color: #1e90ff;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.upload-button:hover {
+	background-color: #1c86ee;
+}
+
+.search-input {
+	margin-top: 20px;
+}
+
+/* Prevent Date from Wrapping */
+.table-custom td:first-child {
+	white-space: nowrap;
+	text-align: center;
+	width: 120px;
+	/* Adjust width to prevent wrapping */
+}
+
+/* General Table Styling */
+.table-custom th,
+.table-custom td {
+	padding: 12px;
+	font-size: 14px;
+}
